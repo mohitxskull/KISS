@@ -59,7 +59,7 @@ function PushFun() {
     clear
     echo ""
 
-    git push -u origin main
+    git push -f -u origin main
 }
 
 echo ""
