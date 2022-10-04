@@ -13,9 +13,9 @@ const port = process.env.PORT || 3000;
     const server = express();
     const proxy = httpProxy.createProxyServer({});
 
-    server.get('/google', (req: Request, res: Response) => {
+    server.get('/proxy-test', (req: Request, res: Response) => {
       proxy.web(req, res, {
-        target: 'https://github.com/http-party/node-http-proxy',
+        target: 'https://busy-teal-sockeye-boot.cyclic.app/',
         changeOrigin: true,
       });
     });
@@ -28,7 +28,7 @@ const port = process.env.PORT || 3000;
 
     server.listen(port, (err?: any) => {
       if (err) throw err;
-      console.log(`> Ready on localhost:${port} - env ${process.env.NODE_ENV}`);
+      console.log(`\n\nhttp://localhost:${port}`);
     });
   } catch (e) {
     console.error(e);

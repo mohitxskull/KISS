@@ -3,14 +3,14 @@ import { Box, Button, Modal, PasswordInput, TextInput } from '@mantine/core';
 import { joiResolver, useForm } from '@mantine/form';
 import { useRouter } from 'next/router';
 import ModalHeader from '../header/ModalHeader';
-import { FetchPost } from '../../lib/helpers/FetchPost';
+import { FetchPost } from '../../lib/helpers/FetchHelpers';
 import CallNoti from '../../lib/helpers/NotiCaller';
 import { APIResTypes } from '../../lib/types/world';
 import Bcrypt from '../../lib/helpers/Bcrypt';
 import { SetupInfoSchema } from '../../lib/schemas/group';
 
 const SetupFormCom = () => {
-  const [PriLoad, setPriLoad] = useState(false);
+  const [PriLoading, setPriLoading] = useState(false);
   const Router = useRouter();
 
   const SetupForm = useForm({
@@ -31,7 +31,7 @@ const SetupFormCom = () => {
           <ModalHeader title="Setup" />
           <form
             onSubmit={SetupForm.onSubmit(async (values) => {
-              setPriLoad(true);
+              setPriLoading(true);
               const ValuesCopy: { ConfirmPassword?: string; Password: string } =
                 { ...values };
               delete ValuesCopy.ConfirmPassword;
@@ -48,25 +48,25 @@ const SetupFormCom = () => {
                 const ErrorMsg: APIResTypes = await Res.json();
                 CallNoti('Error', ErrorMsg.Error);
               }
-              setPriLoad(false);
+              setPriLoading(false);
               SetupForm.reset();
             })}
           >
             <TextInput
-              disabled={PriLoad}
+              disabled={PriLoading}
               required
               label="Username"
               {...SetupForm.getInputProps('Username')}
             />
             <PasswordInput
-              disabled={PriLoad}
+              disabled={PriLoading}
               mt="xs"
               required
               label="Password"
               {...SetupForm.getInputProps('Password')}
             />
             <PasswordInput
-              disabled={PriLoad}
+              disabled={PriLoading}
               mt="xs"
               required
               label="Confirm password"
@@ -74,7 +74,7 @@ const SetupFormCom = () => {
               {...SetupForm.getInputProps('ConfirmPassword')}
             />
 
-            <Button loading={PriLoad} type="submit" mt="md" fullWidth>
+            <Button loading={PriLoading} type="submit" mt="md" fullWidth>
               Submit
             </Button>
           </form>

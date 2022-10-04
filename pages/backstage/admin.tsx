@@ -4,12 +4,14 @@ import {
   InferGetServerSidePropsType,
   NextPage,
 } from 'next';
-import React from 'react';
-import { getSession } from 'next-auth/react';
+import React, { useEffect, useState } from 'react';
+import { getSession, useSession } from 'next-auth/react';
 import MongoDB from '../../lib/client/mongodb';
 import FourZeroFour from '../404';
 import SetupFormCom from '../../components/setup/SetupForm';
 import SigninFormCom from '../../components/signin/SiginForm';
+import Dashboard from '../../components/dashboard/main';
+import { LoadingScreen } from '../../components/Loading';
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
@@ -21,15 +23,13 @@ export const getServerSideProps: GetServerSideProps = async (
   if (Settings) {
     const session = await getSession(context);
 
-    console.log(session);
-
     if (session) {
       return {
-        props: { data: { State: 'dashboard', Data: {} } },
+        props: { data: { State: 'authenticated', Data: {} } },
       };
     }
     return {
-      props: { data: { State: 'login', Data: {} } },
+      props: { data: { State: 'unauthenticated', Data: {} } },
     };
   }
 
@@ -40,13 +40,28 @@ export const getServerSideProps: GetServerSideProps = async (
 
 const Backstage: NextPage = ({
   data,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => (
-  <div style={{ position: 'relative' }}>
-    {data.State === '404' && <FourZeroFour />}
-    {data.State === 'setup' && <SetupFormCom />}
-    {data.State === 'login' && <SigninFormCom />}
-    {data.State === 'dashboard' && <>dash</>}
-  </div>
-);
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const { status } = useSession();
+  const [PriState, setPriState] = useState<
+    '404' | 'setup' | 'unauthenticated' | 'authenticated' | 'loading'
+  >(data.State);
+
+  useEffect(() => {
+    if (PriState !== '404' && PriState !== 'setup') {
+      setPriState(status);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status]);
+
+  return (
+    <div style={{ position: 'relative' }}>
+      {PriState === '404' && <FourZeroFour />}
+      {PriState === 'setup' && <SetupFormCom />}
+      {PriState === 'unauthenticated' && <SigninFormCom />}
+      {PriState === 'authenticated' && <Dashboard />}
+      {PriState === 'loading' && <LoadingScreen />}
+    </div>
+  );
+};
 
 export default Backstage;

@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { FingerprintContextTypes } from '../types/context';
 import { createGenericContext } from './CreateContext';
-
-interface FingerprintContextTypes {
-  Fingerprint: string | null;
-}
 
 const [useFingerprintContext, FingerprintContextProvider] =
   createGenericContext<FingerprintContextTypes>();

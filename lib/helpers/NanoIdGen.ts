@@ -1,11 +1,11 @@
-import { customAlphabet } from "nanoid";
+import { customAlphabet } from 'nanoid/async';
 
-const alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const NanoID = customAlphabet(alphabet, 10);
 
-/**
- * 
- * @returns Nanoid ( which will be used as Proxyid )
- */
-const GenNano = () => customAlphabet(alphabet, 10);
+const GenNano = async () => {
+  const id = await NanoID();
+  return id;
+};
 
 export default GenNano;

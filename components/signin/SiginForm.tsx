@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { Box, Button, Modal, PasswordInput, TextInput } from '@mantine/core';
 import { joiResolver, useForm } from '@mantine/form';
-import { useRouter } from 'next/router';
 import { signIn } from 'next-auth/react';
 import ModalHeader from '../header/ModalHeader';
 import CallNoti from '../../lib/helpers/NotiCaller';
 import { SetupInfoSchema } from '../../lib/schemas/group';
 
 const SigninFormCom = () => {
-  const [PriLoad, setPriLoad] = useState(false);
-  const Router = useRouter();
+  const [PriLoading, setPriLoading] = useState(false);
 
   const SiginForm = useForm({
     initialValues: {
@@ -28,7 +26,7 @@ const SigninFormCom = () => {
           <ModalHeader title="Sign in" />
           <form
             onSubmit={SiginForm.onSubmit(async (values) => {
-              setPriLoad(true);
+              setPriLoading(true);
 
               const Res = await signIn('credentials', {
                 username: values.Username,
@@ -38,31 +36,30 @@ const SigninFormCom = () => {
 
               if (Res?.ok) {
                 CallNoti('Done', 'Signed in!');
-                Router.push('/backstage/admin');
               } else {
                 CallNoti('Error', Res?.error || 'Invalid creds');
               }
-              setPriLoad(false);
+              setPriLoading(false);
               SiginForm.reset();
             })}
           >
             <TextInput
               withAsterisk={false}
-              disabled={PriLoad}
+              disabled={PriLoading}
               required
               label="Username"
               {...SiginForm.getInputProps('Username')}
             />
             <PasswordInput
               withAsterisk={false}
-              disabled={PriLoad}
+              disabled={PriLoading}
               mt="xs"
               required
               label="Password"
               {...SiginForm.getInputProps('Password')}
             />
 
-            <Button loading={PriLoad} type="submit" mt="md" fullWidth>
+            <Button loading={PriLoading} type="submit" mt="md" fullWidth>
               Sign in
             </Button>
           </form>

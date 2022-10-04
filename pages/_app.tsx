@@ -1,12 +1,14 @@
-import { AppProps } from 'next/app';
+import React from 'react';
 import Head from 'next/head';
 import { ColorSchemeProvider, MantineProvider } from '@mantine/core';
-import React from 'react';
+import { AppProps } from 'next/app';
 import { useLocalStorage } from '@mantine/hooks';
 import { NotificationsProvider } from '@mantine/notifications';
 import { SessionProvider } from 'next-auth/react';
 import { Session } from 'next-auth';
+import { ModalsProvider } from '@mantine/modals';
 import { FingerprintProvider } from '../lib/context/Fingerprint';
+import '../styles/world.css';
 
 export default function App({
   Component,
@@ -31,7 +33,11 @@ export default function App({
         />
       </Head>
 
-      <SessionProvider session={session}>
+      <SessionProvider
+        session={session}
+        refetchInterval={5 * 60}
+        refetchOnWindowFocus
+      >
         <FingerprintProvider>
           <ColorSchemeProvider
             colorScheme={colorScheme}
@@ -46,9 +52,11 @@ export default function App({
                 primaryShade: 6,
               }}
             >
-              <NotificationsProvider>
-                <Component {...pageProps} />
-              </NotificationsProvider>
+              <ModalsProvider>
+                <NotificationsProvider>
+                  <Component {...pageProps} />
+                </NotificationsProvider>
+              </ModalsProvider>
             </MantineProvider>
           </ColorSchemeProvider>
         </FingerprintProvider>

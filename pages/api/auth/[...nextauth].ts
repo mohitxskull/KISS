@@ -23,16 +23,16 @@ const authOptions: NextAuthOptions = {
 
         if (Creds) {
           if (
-            username !== Creds.Username ||
-            !Bcrypt.Check(password, Creds.Password)
+            username === Creds.Username &&
+            Bcrypt.Check(password, Creds.Password)
           ) {
-            throw new Error('invalid credentials');
+            return {
+              id: 'kiss',
+              username: Creds.Username,
+            };
           }
 
-          return {
-            id: 'kiss',
-            username: Creds.Username,
-          };
+          throw new Error('invalid credentials');
         }
         throw new Error('Setup not done yet!');
       },
@@ -40,6 +40,13 @@ const authOptions: NextAuthOptions = {
   ],
   pages: {
     signIn: '/backstage/admin',
+  },
+  callbacks: {
+    async jwt({ token }) {
+      // eslint-disable-next-line no-param-reassign
+      token.userRole = 'admin';
+      return token;
+    },
   },
 };
 

@@ -9,3 +9,5 @@ export const FetchPost = async (
       'Content-Type': 'application/json',
     },
   });
+
+export const Fetcher = (URl: string) => fetch(URl).then((res) => res.json());
