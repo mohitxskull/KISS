@@ -43,7 +43,7 @@ const SetupFormCom = () => {
 
               if (Res.ok) {
                 CallNoti('Done', 'Setup completed!');
-                Router.push('/backstage/admin');
+                Router.push('/');
               } else {
                 const ErrorMsg: APIResTypes = await Res.json();
                 CallNoti('Error', ErrorMsg.Error);

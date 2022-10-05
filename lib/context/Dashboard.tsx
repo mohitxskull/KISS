@@ -16,7 +16,10 @@ const DashboardProvider = ({ children }: { children: React.ReactNode }) => {
   const [AddConfigModalState, setAddConfigModalState] = useState(false);
 
   const [FetchError, setFetchError] = useState<string | null>(null);
-  const [Origin, setOrigin] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [Origin, setOrigin] = useState<string | null>(
+    'https://kiss-proxy-beta.cyclic.app/k'
+  );
   const [ConfigToUpdate, setConfigToUpdate] = useState<ConfigTypes | null>(
     null
   );
@@ -35,7 +38,7 @@ const DashboardProvider = ({ children }: { children: React.ReactNode }) => {
       () => {
         setPriLoading(false);
       },
-      process.env.NODE_ENV === 'development' ? 500 : 2000
+      process.env.NODE_ENV === 'development' ? 500 : 1500
     );
   };
 
@@ -99,7 +102,6 @@ const DashboardProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     UpdateConfigList();
-    setOrigin(window.location.origin);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

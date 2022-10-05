@@ -9,6 +9,7 @@ import { Session } from 'next-auth';
 import { ModalsProvider } from '@mantine/modals';
 import { FingerprintProvider } from '../lib/context/Fingerprint';
 import '../styles/world.css';
+import '../styles/underline.css';
 
 export default function App({
   Component,

@@ -7,7 +7,6 @@ import {
   Footer,
 } from '@mantine/core';
 import { BrandGithub, BrandInstagram } from 'tabler-icons-react';
-import Link from 'next/link';
 
 const useStyles = createStyles((theme) => ({
   footer: {
@@ -42,25 +41,42 @@ export function DashFooter() {
     <Footer height={60} className={classes.footer}>
       <Container className={classes.inner}>
         <span
+          // className="underline"
           style={{
             fontSize: '14px',
             fontFamily: 'Archiv-o, sans-serif',
             userSelect: 'none',
+            cursor: 'pointer',
           }}
         >
-          Built & Designed by Skull
+          <a
+            target="_blank"
+            rel="noreferrer"
+            style={{ color: 'inherit', textDecoration: 'none' }}
+            href="https://mohitxskull.vercel.app"
+          >
+            Built & Designed by Skull
+          </a>
         </span>
         <Group spacing={0} className={classes.links} position="right" noWrap>
-          <Link href="https://github.com/servedbyskull" passHref>
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href="https://github.com/servedbyskull"
+          >
             <ActionIcon variant="transparent" size="lg">
               <BrandGithub size={18} />
             </ActionIcon>
-          </Link>
-          <Link href="https://instagram.com/mohitxskull.dev" passHref>
+          </a>
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href="https://instagram.com/mohitxskull.dev"
+          >
             <ActionIcon variant="transparent" size="lg">
               <BrandInstagram size={18} />
             </ActionIcon>
-          </Link>
+          </a>
         </Group>
       </Container>
     </Footer>

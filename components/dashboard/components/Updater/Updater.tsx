@@ -6,9 +6,11 @@ import {
   NumberInput,
   SimpleGrid,
   Switch,
+  Text,
   TextInput,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { openConfirmModal } from '@mantine/modals';
 import React, { useEffect, useState } from 'react';
 import { useDashboardContext } from '../../../../lib/context/Dashboard';
 import { BoolCardDataTypes, ConfigTypes } from '../../../../lib/types/world';
@@ -18,9 +20,9 @@ const Updater = () => {
   const {
     ConfigToUpdate,
     setConfigToUpdate,
-    Origin,
     HandleUpdateConfig,
     HandleDeleteConfig,
+    Origin,
   } = useDashboardContext();
 
   const [PriLoading, setPriLoading] = useState(false);
@@ -168,12 +170,14 @@ const Updater = () => {
             <TextInput
               description={`${Origin}/${UpdateForm.values._id}`}
               label="Proxy id"
-              {...UpdateForm.getInputProps('_id')}
+              value={UpdateForm.values._id}
+              readOnly
+              disabled
             />
 
             <TextInput
               label="Target"
-              placeholder="https://google.com/"
+              placeholder="https://www.startpage.com/"
               value={UpdateForm.values.links[0] || ''}
               onChange={(e) => {
                 if (e.target.value.length < 13 && UpdateForm.values.active) {
@@ -228,10 +232,32 @@ const Updater = () => {
                     com: (
                       <Button
                         onClick={() => {
-                          if (ConfigToUpdate) {
-                            HandleDeleteConfig(ConfigToUpdate?._id);
-                          }
+                          openConfirmModal({
+                            title: 'Please confirm your action',
+                            centered: true,
+                            withCloseButton: false,
+                            children: (
+                              <>
+                                <Text size="sm">
+                                  Are you sure you want to delete your profile?
+                                  This action is destructive.
+                                </Text>
+                              </>
+                            ),
+                            labels: {
+                              confirm: 'Delete config',
+                              cancel: "No don't delete it",
+                            },
+                            confirmProps: { color: 'red' },
+                            onCancel: () => {},
+                            onConfirm: () => {
+                              if (ConfigToUpdate) {
+                                HandleDeleteConfig(ConfigToUpdate?._id);
+                              }
+                            },
+                          });
                         }}
+                        style={{ width: '100px' }}
                         color="red"
                         variant="light"
                       >

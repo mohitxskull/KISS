@@ -16,6 +16,7 @@ import {
   Menu as MenuIcon,
   MoonStars,
   NewSection,
+  Refresh,
   Settings,
   Sun,
 } from 'tabler-icons-react';
@@ -29,7 +30,7 @@ import AddConfigModal from '../dashboard/components/AddConfigModal';
 const DashHeader = () => {
   const theme = useMantineTheme();
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
-  const MenuTrigger = useMediaQuery('(max-width: 566px)', true, {
+  const MenuTrigger = useMediaQuery('(max-width: 593px)', true, {
     getInitialValueInEffect: false,
   });
 
@@ -38,19 +39,21 @@ const DashHeader = () => {
     AddConfigModalState,
     setAddConfigModalState,
     HandleAddConfig,
+    UpdateConfigList,
   } = useDashboardContext();
 
-  const HandleLogout = () =>
+  const HandleLogout = () => {
     openConfirmModal({
       title: 'Please confirm your action',
       centered: true,
       withCloseButton: false,
       children: <Text size="sm">You wanna logout Human being? sure?</Text>,
-      labels: { confirm: 'Yeap!', cancel: 'Nope' },
+      labels: { confirm: 'Logout', cancel: 'Cancle' },
       confirmProps: { color: 'red' },
       onCancel: () => {},
       onConfirm: () => signOut({ redirect: false }),
     });
+  };
 
   return (
     <>
@@ -77,7 +80,15 @@ const DashHeader = () => {
           </Group>
 
           {MenuTrigger ? (
-            <>
+            <Group spacing="xs">
+              <ActionIcon
+                onClick={UpdateConfigList}
+                disabled={PriLoading}
+                size="lg"
+                variant="transparent"
+              >
+                <Refresh size={20} />
+              </ActionIcon>
               <Menu
                 disabled={PriLoading}
                 position="bottom-end"
@@ -123,9 +134,17 @@ const DashHeader = () => {
                   </Menu.Item>
                 </Menu.Dropdown>
               </Menu>
-            </>
+            </Group>
           ) : (
             <Group spacing="sm">
+              <ActionIcon
+                onClick={UpdateConfigList}
+                disabled={PriLoading}
+                size="lg"
+                variant="light"
+              >
+                <Refresh size={20} />
+              </ActionIcon>
               <ActionIcon
                 onClick={() => setAddConfigModalState(true)}
                 disabled={PriLoading}

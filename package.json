@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "analyze": "ANALYZE=true next build"
   },
   "dependencies": {
     "@emotion/react": "^11.10.4",
@@ -19,6 +20,7 @@
     "@mantine/modals": "^5.4.2",
     "@mantine/next": "^5.4.2",
     "@mantine/notifications": "^5.4.2",
+    "@next/bundle-analyzer": "^12.3.1",
     "@types/express": "^4.17.14",
     "bcryptjs": "^2.4.3",
     "joi": "^17.6.2",
