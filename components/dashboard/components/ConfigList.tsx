@@ -1,4 +1,4 @@
-import { Alert, Code, Container, Group, SimpleGrid, Text } from '@mantine/core';
+import { Alert, Code, Container, Group, Text } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 import React from 'react';
 import { InfoCircle } from 'tabler-icons-react';

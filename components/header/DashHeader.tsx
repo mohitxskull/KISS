@@ -76,7 +76,7 @@ const DashHeader = () => {
             >
               Kiss
             </Text>
-            <Code color="dark">V:Embrasser:0.1.000-Beta</Code>
+            <Code color="dark">V:Embrasser:0.2.006-Beta</Code>
           </Group>
 
           {MenuTrigger ? (
