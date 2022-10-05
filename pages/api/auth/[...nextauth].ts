@@ -39,7 +39,7 @@ const authOptions: NextAuthOptions = {
     }),
   ],
   pages: {
-    signIn: '/backstage/admin',
+    signIn: '/app/backstage/admin',
   },
   callbacks: {
     async jwt({ token }) {

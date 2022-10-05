@@ -6,12 +6,12 @@ import {
 } from 'next';
 import React, { useEffect, useState } from 'react';
 import { getSession, useSession } from 'next-auth/react';
-import MongoDB from '../../lib/client/mongodb';
-import FourZeroFour from '../404';
-import SetupFormCom from '../../components/setup/SetupForm';
-import SigninFormCom from '../../components/signin/SiginForm';
-import Dashboard from '../../components/dashboard/main';
-import { LoadingScreen } from '../../components/Loading';
+import MongoDB from '../lib/client/mongodb';
+import FourZeroFour from './404';
+import SetupFormCom from '../components/setup/SetupForm';
+import SigninFormCom from '../components/signin/SiginForm';
+import Dashboard from '../components/dashboard/main';
+//import { LoadingScreen } from '../../components/Loading';
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
@@ -57,9 +57,10 @@ const Backstage: NextPage = ({
     <div style={{ position: 'relative' }}>
       {PriState === '404' && <FourZeroFour />}
       {PriState === 'setup' && <SetupFormCom />}
-      {PriState === 'unauthenticated' && <SigninFormCom />}
+      {(PriState === 'unauthenticated' || PriState === 'loading') && (
+        <SigninFormCom />
+      )}
       {PriState === 'authenticated' && <Dashboard />}
-      {PriState === 'loading' && <LoadingScreen />}
     </div>
   );
 };

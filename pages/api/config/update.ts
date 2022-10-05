@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import MongoDB from '../../../lib/client/mongodb';
-import { APIResTypes, ConfigTypes } from '../../../lib/types/world';
 import { UpdateConfigSchema } from '../../../lib/schemas/group';
+import { APIResTypes, ConfigTypes } from '../../../lib/types/world';
 
 export default async function handler(
   req: NextApiRequest,

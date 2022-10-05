@@ -23,6 +23,10 @@ export default function App({
   const toggleColorScheme = () =>
     setColorScheme((current) => (current === 'dark' ? 'light' : 'dark'));
 
+  // useEffect(() => {
+  //   console.log(window.location.pathname);
+  // }, []);
+
   return (
     <>
       <Head>
