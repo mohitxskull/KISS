@@ -13,6 +13,7 @@ export interface SettingTypes {
 
 export interface ConfigTypes {
   _id: string;
+  userid: string;
   name: string;
   proxy: boolean;
   active: boolean;

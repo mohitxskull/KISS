@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getSession } from 'next-auth/react';
 import MongoDB from '../../../lib/client/mongodb';
+import { Supabase } from '../../../lib/client/supabase';
 import { UpdateConfigSchema } from '../../../lib/schemas/group';
 import { APIResTypes, ConfigTypes } from '../../../lib/types/world';
 
@@ -9,9 +9,9 @@ export default async function handler(
   res: NextApiResponse<APIResTypes>
 ) {
   if (req.method === 'POST') {
-    const session = await getSession({ req });
+    const { user } = await Supabase.auth.api.getUserByCookie(req);
 
-    if (session) {
+    if (user) {
       const Body: ConfigTypes = req.body;
 
       try {
@@ -30,16 +30,19 @@ export default async function handler(
           'configs'
         ).findOne({
           _id: Body._id,
+          userid: user.id,
         });
 
         if (ConfigInDb) {
           const NewConfig: Omit<ConfigTypes, 'createdAt'> = {
             ...Body,
+            userid: user.id,
             updatedAt: Date.now(),
           };
           await MongoDB.collection<ConfigTypes>('configs').updateOne(
             {
               _id: Body._id,
+              userid: user.id,
             },
             { $set: NewConfig }
           );

@@ -21,11 +21,11 @@ import {
   Sun,
 } from 'tabler-icons-react';
 import { openConfirmModal } from '@mantine/modals';
-import { signOut } from 'next-auth/react';
 import { useMediaQuery } from '@mantine/hooks';
 import ThemeToggleBtn from '../ThemeToggle';
 import { useDashboardContext } from '../../lib/context/Dashboard';
 import AddConfigModal from '../dashboard/components/AddConfigModal';
+import SupabaseLogout from '../../lib/helpers/SupabaseLogout';
 
 const DashHeader = () => {
   const theme = useMantineTheme();
@@ -51,7 +51,7 @@ const DashHeader = () => {
       labels: { confirm: 'Logout', cancel: 'Cancle' },
       confirmProps: { color: 'red' },
       onCancel: () => {},
-      onConfirm: () => signOut({ redirect: false }),
+      onConfirm: () => SupabaseLogout(),
     });
   };
 
@@ -76,7 +76,9 @@ const DashHeader = () => {
             >
               Kiss
             </Text>
-            <Code color="dark">V:Embrasser:0.2.006-Beta</Code>
+            {(process.env.NEXT_PUBLIC_VERSION || null) && (
+              <Code color="dark">{process.env.NEXT_PUBLIC_VERSION}</Code>
+            )}
           </Group>
 
           {MenuTrigger ? (

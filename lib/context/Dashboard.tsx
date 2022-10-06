@@ -16,13 +16,11 @@ const DashboardProvider = ({ children }: { children: React.ReactNode }) => {
   const [AddConfigModalState, setAddConfigModalState] = useState(false);
 
   const [FetchError, setFetchError] = useState<string | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [Origin, setOrigin] = useState<string | null>(
-    'https://kiss-proxy-beta.cyclic.app/k'
-  );
   const [ConfigToUpdate, setConfigToUpdate] = useState<ConfigTypes | null>(
     null
   );
+
+  const Origin = process.env.NEXT_PUBLIC_PROXY || null;
 
   const UpdateConfigList = async () => {
     setPriLoading(true);
@@ -34,12 +32,8 @@ const DashboardProvider = ({ children }: { children: React.ReactNode }) => {
     } else {
       setFetchError(ResBody.Error);
     }
-    setTimeout(
-      () => {
-        setPriLoading(false);
-      },
-      process.env.NODE_ENV === 'development' ? 500 : 1500
-    );
+
+    setPriLoading(false);
   };
 
   const HandleUpdateConfig = async (

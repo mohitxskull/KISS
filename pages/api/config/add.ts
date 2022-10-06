@@ -1,19 +1,19 @@
 import Joi from 'joi';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getSession } from 'next-auth/react';
 import MongoDB from '../../../lib/client/mongodb';
 import { APIResTypes, ConfigTypes } from '../../../lib/types/world';
 import GetNano from '../../../lib/helpers/NanoIdGen';
 import Capitalize from '../../../lib/helpers/Capitalize';
+import { Supabase } from '../../../lib/client/supabase';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<APIResTypes>
 ) {
   if (req.method === 'POST') {
-    const session = await getSession({ req });
+    const { user } = await Supabase.auth.api.getUserByCookie(req);
 
-    if (session) {
+    if (user) {
       const ConfigName: string = Capitalize(req.body.name) || '';
 
       try {
@@ -29,28 +29,32 @@ export default async function handler(
       }
 
       try {
-        const Settings = await MongoDB.collection('configs').findOne({
+        const Settings = await MongoDB.collection<ConfigTypes>(
+          'configs'
+        ).findOne({
           name: ConfigName,
+          userid: user.id,
         });
 
-        const DefaultConfig: ConfigTypes = {
-          _id: await GetNano(),
-          name: ConfigName,
-          proxy: true,
-          active: false,
-          createdAt: Date.now(),
-          updatedAt: Date.now(),
-          links: ['https://google.com/'],
-          options: {
-            xfwd: true,
-            changeOrigin: true,
-            proxyTimeout: 10000,
-            timeout: 10000,
-            followRedirects: false,
-          },
-        };
-
         if (!Settings) {
+          const DefaultConfig: ConfigTypes = {
+            _id: await GetNano(),
+            userid: user.id,
+            name: ConfigName,
+            proxy: true,
+            active: false,
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
+            links: ['https://www.startpage.com/'],
+            options: {
+              xfwd: false,
+              changeOrigin: true,
+              proxyTimeout: 10000,
+              timeout: 10000,
+              followRedirects: false,
+            },
+          };
+
           await MongoDB.collection<ConfigTypes>('configs').insertOne(
             DefaultConfig
           );

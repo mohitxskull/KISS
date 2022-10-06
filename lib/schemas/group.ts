@@ -1,22 +1,15 @@
 import Joi from 'joi';
-import { HASHEDPASS, PASS, USERNAME } from './world';
+import { EMAIL, PASSWORD } from './world';
 
-export const SetupInfoSchema = Joi.object({
-  Username: USERNAME,
-  Password: PASS,
-  ConfirmPassword: Joi.any()
-    .valid(Joi.ref('Password'))
-    .messages({ 'any.only': 'Passwords do not match' }),
-});
-
-export const SetupInfoSchemaServer = Joi.object({
-  Username: USERNAME,
-  Password: HASHEDPASS,
+export const SignSchema = Joi.object({
+  email: EMAIL.required(),
+  password: PASSWORD.required(),
 });
 
 export const UpdateConfigSchema = Joi.object({
   _id: Joi.string().min(0).max(10).required(),
   name: Joi.string().min(3).max(20).required(),
+  userid: Joi.string().min(10).max(50).optional(),
   links: Joi.array().items(Joi.string().min(0).max(100).required()),
   proxy: Joi.boolean().required(),
   active: Joi.boolean().required(),

@@ -1,19 +1,19 @@
 import Joi from 'joi';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getSession } from 'next-auth/react';
 import MongoDB from '../../../lib/client/mongodb';
 import { APIResTypes, ConfigTypes } from '../../../lib/types/world';
 import Capitalize from '../../../lib/helpers/Capitalize';
+import { Supabase } from '../../../lib/client/supabase';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<APIResTypes>
 ) {
   if (req.method === 'POST') {
-    const session = await getSession({ req });
+    const { user } = await Supabase.auth.api.getUserByCookie(req);
 
-    if (session) {
-      const ID: string = Capitalize(req.body._id) || '';
+    if (user) {
+      const ID = Capitalize(req.body._id);
 
       try {
         // eslint-disable-next-line newline-per-chained-call
@@ -32,11 +32,13 @@ export default async function handler(
           'configs'
         ).findOne({
           _id: ID,
+          userid: user.id,
         });
 
         if (ConfigInDb) {
           await MongoDB.collection<ConfigTypes>('configs').deleteOne({
             _id: ID,
+            userid: user.id,
           });
 
           res.status(200).json({ Data: 'OK', Error: null });

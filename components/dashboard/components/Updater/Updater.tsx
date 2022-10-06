@@ -31,6 +31,7 @@ const Updater = () => {
     initialValues: {
       _id: '',
       name: '',
+      userid: '',
       proxy: false,
       active: false,
       links: [],

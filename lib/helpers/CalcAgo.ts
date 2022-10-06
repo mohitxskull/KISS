@@ -15,7 +15,8 @@ const CalcAgo = (MS: number) => {
   if (hours > 0) {
     Res += ` ${hours} Hour`;
   }
-  if (minutes > 0) {
+
+  if (minutes > 0 && hours < 1) {
     Res += ` ${minutes} Min`;
   }
 

@@ -1,68 +1,55 @@
-import {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-  NextPage,
-} from 'next';
-import React, { useEffect, useState } from 'react';
-import { getSession, useSession } from 'next-auth/react';
-import MongoDB from '../lib/client/mongodb';
-import FourZeroFour from './404';
-import SetupFormCom from '../components/setup/SetupForm';
-import SigninFormCom from '../components/signin/SiginForm';
-import Dashboard from '../components/dashboard/main';
-//import { LoadingScreen } from '../../components/Loading';
+import React from 'react';
+import { Box, SimpleGrid, Text } from '@mantine/core';
+import { NextPage } from 'next';
+import Link from 'next/link';
+import { DashFooter } from '../components/footer/DashFooter';
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  const Settings = await MongoDB.collection('settings').findOne({
-    _id: 'kiss',
-  });
+const Index: NextPage = () => (
+  <>
+    <Box
+      sx={() => ({
+        height: '90vh',
+      })}
+      pt={70}
+    >
+      <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+        <div
+          style={{
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        >
+          <SimpleGrid cols={1}>
+            <Text
+              sx={(theme) => ({
+                fontFamily: 'DGE-B, sans-serif',
+                fontSize: 145, // SmallerScreen ? 100 : 200,
+                lineHeight: 0.7,
+                color: theme.colors.grape[6],
+              })}
+            >
+              Kiss
+            </Text>
 
-  if (Settings) {
-    const session = await getSession(context);
+            <Link href="/signin">
+              <Text
+                align="center"
+                sx={() => ({
+                  cursor: 'pointer',
+                  textDecoration: 'underline',
+                })}
+              >
+                Signin
+              </Text>
+            </Link>
+          </SimpleGrid>
+        </div>
+      </div>
+    </Box>
 
-    if (session) {
-      return {
-        props: { data: { State: 'authenticated', Data: {} } },
-      };
-    }
-    return {
-      props: { data: { State: 'unauthenticated', Data: {} } },
-    };
-  }
-
-  return {
-    props: { data: { State: 'setup', Data: {} } },
-  };
-};
-
-const Backstage: NextPage = ({
-  data,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const { status } = useSession();
-  const [PriState, setPriState] = useState<
-    '404' | 'setup' | 'unauthenticated' | 'authenticated' | 'loading'
-  >(data.State);
-
-  useEffect(() => {
-    if (PriState !== '404' && PriState !== 'setup') {
-      setPriState(status);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status]);
-
-  return (
-    <div style={{ position: 'relative' }}>
-      {PriState === '404' && <FourZeroFour />}
-      {PriState === 'setup' && <SetupFormCom />}
-      {(PriState === 'unauthenticated' || PriState === 'loading') && (
-        <SigninFormCom />
-      )}
-      {PriState === 'authenticated' && <Dashboard />}
-    </div>
-  );
-};
-
-export default Backstage;
+    <DashFooter />
+  </>
+);
+export default Index;

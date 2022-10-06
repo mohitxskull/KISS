@@ -1,20 +1,22 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getSession } from 'next-auth/react';
 import MongoDB from '../../../lib/client/mongodb';
-import { APIResTypes } from '../../../lib/types/world';
+import { Supabase } from '../../../lib/client/supabase';
+import { APIResTypes, ConfigTypes } from '../../../lib/types/world';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<APIResTypes>
 ) {
   if (req.method === 'GET') {
-    const session = await getSession({ req });
+    const { user } = await Supabase.auth.api.getUserByCookie(req);
 
-    if (session) {
+    if (user) {
       try {
         console.log('\nGet hit!\n');
 
-        const ConfigList = await MongoDB.collection('configs').find().toArray();
+        const ConfigList = await MongoDB.collection<ConfigTypes>('configs')
+          .find({ userid: user.id })
+          .toArray();
 
         res.status(200).json({ Data: ConfigList, Error: null });
       } catch (error) {
