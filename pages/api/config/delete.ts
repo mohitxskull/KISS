@@ -42,13 +42,12 @@ export default async function handler(
             userid: user.id,
           });
 
-          res.status(200).json({ Data: 'OK', Error: null });
-
           const UpdateToCache = await fetch(
             `${ProxyUrl}/cache/update/config/delete/${process.env.PROXY_PASS}/${ProxyID}`
           );
 
           console.log('Cache delete res => ', UpdateToCache.status);
+          res.status(200).json({ Data: 'OK', Error: null });
         } else {
           res.status(404).json({ Data: null, Error: 'Config not in database' });
         }
