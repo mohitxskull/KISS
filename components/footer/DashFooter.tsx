@@ -62,6 +62,7 @@ export function DashFooter() {
           <a
             target="_blank"
             rel="noreferrer"
+            aria-label="Skull Github Link"
             href="https://github.com/servedbyskull"
           >
             <ActionIcon variant="transparent" size="lg">
@@ -71,6 +72,7 @@ export function DashFooter() {
           <a
             target="_blank"
             rel="noreferrer"
+            aria-label="Skull Instagram Link"
             href="https://instagram.com/mohitxskull.dev"
           >
             <ActionIcon variant="transparent" size="lg">

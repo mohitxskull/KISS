@@ -51,6 +51,11 @@ export default function App(props: AppProps) {
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
+
+        <meta
+          name="description"
+          content="Kiss is all about configs, redirects and reverse-proxy"
+        />
       </Head>
 
       <FingerprintProvider>
