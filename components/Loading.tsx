@@ -9,7 +9,7 @@ export const LoadingScreen = () => (
   </>
 );
 
-export const LoadingText = ({ mt }: { mt: number }) => (
+export const LoadingText = ({ mt = 0 }: { mt?: number }) => (
   <>
     <Center mt={mt}>
       <Text className="Elloading" weight="bold">

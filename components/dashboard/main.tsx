@@ -15,7 +15,7 @@ import ConfigListCard from './components/ConfigListCard';
 const DynamicSettingsCard = lazy(() => import('../setting/Card'));
 const DynamicUpdater = lazy(() => import('./components/Updater/Updater'));
 
-const Dashboard = () => {
+const DashboardComponent = () => {
   const [TutorialState, setTutorialState] = useLocalStorage<boolean>({
     key: 'kiss-tutorial',
     defaultValue: true,
@@ -99,4 +99,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardComponent;
