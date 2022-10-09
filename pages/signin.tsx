@@ -10,10 +10,9 @@ import {
 } from '@mantine/core';
 import { joiResolver, useForm } from '@mantine/form';
 import { GetServerSideProps, NextPage } from 'next';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { Supabase } from '../lib/client/supabase';
+import { Supabase } from '../lib/client/supabase.pub';
 import CallNoti from '../lib/helpers/NotiCaller';
 import { SignSchema } from '../lib/schemas/group';
 import ModalHeader from '../components/header/ModalHeader';
@@ -37,12 +36,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
 const SignIn: NextPage = () => {
   const [PrivateLoading, setPrivateLoading] = useState(false);
-  const Router = useRouter();
-
-  useEffect(() => {
-    sessionStorage.clear();
-    console.info('Session storage cleared!');
-  }, []);
 
   const HandleSignIn = async (EMAIL: string, PASSWORD: string) => {
     try {
@@ -52,7 +45,6 @@ const SignIn: NextPage = () => {
         password: PASSWORD,
       });
       if (error) throw error;
-      setTimeout(() => Router.push('/dashboard'), 1000);
     } catch (error: any) {
       CallNoti('Error', error.error_description || error.message);
       setPrivateLoading(false);

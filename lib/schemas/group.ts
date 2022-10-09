@@ -6,6 +6,12 @@ export const SignSchema = Joi.object({
   password: PASSWORD.required(),
 });
 
+export const UpdatePassSchema = Joi.object({
+  oldPass: PASSWORD.required(),
+  newPass: PASSWORD.required(),
+  confirmNewPass: PASSWORD.required(),
+});
+
 export const UpdateConfigSchema = Joi.object({
   _id: Joi.string().min(0).max(10).required(),
   name: Joi.string().min(3).max(20).required(),

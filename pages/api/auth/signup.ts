@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Supabase } from '../../../lib/client/supabase';
+import { Supabase } from '../../../lib/client/supabase.pub';
 import Bcrypt from '../../../lib/helpers/Bcrypt';
 import LogError from '../../../lib/helpers/LogError';
 import { SignSchema } from '../../../lib/schemas/group';

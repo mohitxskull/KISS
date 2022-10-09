@@ -35,12 +35,15 @@ const DashHeader = () => {
   });
 
   const {
-    PriLoading,
-    AddConfigModalState,
-    setAddConfigModalState,
+    SetDashboardState,
+    GetDashboardState,
     HandleAddConfig,
     UpdateConfigList,
   } = useDashboardContext();
+
+  const DashboardState = GetDashboardState<null>();
+  const PriLoading = DashboardState.state === 'loading';
+  const StateIsList = DashboardState.state === 'list';
 
   const HandleLogout = () => {
     openConfirmModal({
@@ -58,8 +61,8 @@ const DashHeader = () => {
   return (
     <>
       <AddConfigModal
-        Opened={AddConfigModalState}
-        setClose={setAddConfigModalState}
+        Opened={DashboardState.modal === 'addConfig'}
+        setClose={() => SetDashboardState({ modal: null })}
         HandleAddConfigFun={HandleAddConfig}
       />
       <Header height={70} mb="md" px="md">
@@ -83,14 +86,16 @@ const DashHeader = () => {
 
           {MenuTrigger ? (
             <Group spacing="xs">
-              <ActionIcon
-                onClick={UpdateConfigList}
-                disabled={PriLoading}
-                size="lg"
-                variant="transparent"
-              >
-                <Refresh size={20} />
-              </ActionIcon>
+              {StateIsList && (
+                <ActionIcon
+                  onClick={UpdateConfigList}
+                  disabled={PriLoading}
+                  size="lg"
+                  variant="transparent"
+                >
+                  <Refresh size={20} />
+                </ActionIcon>
+              )}
               <Menu
                 disabled={PriLoading}
                 position="bottom-end"
@@ -105,14 +110,24 @@ const DashHeader = () => {
                 </Menu.Target>
 
                 <Menu.Dropdown>
-                  {/* <Menu.Label>Application</Menu.Label> */}
-                  <Menu.Item
-                    onClick={() => setAddConfigModalState(true)}
-                    icon={<NewSection size={18} />}
-                  >
-                    Add config
-                  </Menu.Item>
-                  <Menu.Item icon={<Settings size={18} />}>Settings</Menu.Item>
+                  {StateIsList && (
+                    <>
+                      <Menu.Item
+                        onClick={() =>
+                          SetDashboardState({ modal: 'addConfig' })
+                        }
+                        icon={<NewSection size={18} />}
+                      >
+                        Add config
+                      </Menu.Item>
+                      <Menu.Item
+                        onClick={() => SetDashboardState({ state: 'settings' })}
+                        icon={<Settings size={18} />}
+                      >
+                        Settings
+                      </Menu.Item>
+                    </>
+                  )}
                   <Menu.Item
                     onClick={() => toggleColorScheme()}
                     color={colorScheme === 'dark' ? 'yellow' : 'blue'}
@@ -139,26 +154,35 @@ const DashHeader = () => {
             </Group>
           ) : (
             <Group spacing="sm">
-              <ActionIcon
-                onClick={UpdateConfigList}
-                disabled={PriLoading}
-                size="lg"
-                variant="light"
-              >
-                <Refresh size={20} />
-              </ActionIcon>
-              <ActionIcon
-                onClick={() => setAddConfigModalState(true)}
-                disabled={PriLoading}
-                size="lg"
-                variant="light"
-              >
-                <NewSection size={20} />
-              </ActionIcon>
-              <ActionIcon disabled={PriLoading} size="lg" variant="light">
-                <Settings size={20} />
-              </ActionIcon>
-              <ThemeToggleBtn />
+              {StateIsList && (
+                <>
+                  <ActionIcon
+                    onClick={UpdateConfigList}
+                    disabled={PriLoading}
+                    size="lg"
+                    variant="light"
+                  >
+                    <Refresh size={20} />
+                  </ActionIcon>
+                  <ActionIcon
+                    onClick={() => SetDashboardState({ modal: 'addConfig' })}
+                    disabled={PriLoading}
+                    size="lg"
+                    variant="light"
+                  >
+                    <NewSection size={20} />
+                  </ActionIcon>
+                  <ActionIcon
+                    onClick={() => SetDashboardState({ state: 'settings' })}
+                    disabled={PriLoading}
+                    size="lg"
+                    variant="light"
+                  >
+                    <Settings size={20} />
+                  </ActionIcon>{' '}
+                </>
+              )}
+              <ThemeToggleBtn variant="light" />
 
               <Divider orientation="vertical" />
 

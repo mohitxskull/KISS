@@ -1,20 +1,24 @@
 import React from 'react';
-import { useMantineColorScheme, ActionIcon } from '@mantine/core';
+import {
+  useMantineColorScheme,
+  ActionIcon,
+  ActionIconVariant,
+} from '@mantine/core';
 import { Sun, MoonStars } from 'tabler-icons-react';
 
-const ThemeToggleBtn = () => {
+const ThemeToggleBtn = ({
+  variant = 'light',
+}: {
+  variant?: ActionIconVariant;
+}) => {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
 
   return (
     <ActionIcon
       onClick={() => toggleColorScheme()}
       size="lg"
-      variant="transparent"
+      variant={variant}
       sx={(theme) => ({
-        backgroundColor:
-          theme.colorScheme === 'dark'
-            ? theme.colors.gray[9]
-            : theme.colors.gray[0],
         color:
           theme.colorScheme === 'dark'
             ? theme.colors.yellow[4]

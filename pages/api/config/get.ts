@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import MongoDB from '../../../lib/client/mongodb';
-import { Supabase } from '../../../lib/client/supabase';
+import { Supabase } from '../../../lib/client/supabase.pub';
 import { APIResTypes, ConfigTypes } from '../../../lib/types/world';
 
 export default async function handler(

@@ -4,7 +4,7 @@ import MongoDB from '../../../lib/client/mongodb';
 import { APIResTypes, ConfigTypes } from '../../../lib/types/world';
 import GetNano from '../../../lib/helpers/NanoIdGen';
 import Capitalize from '../../../lib/helpers/Capitalize';
-import { Supabase } from '../../../lib/client/supabase';
+import { Supabase } from '../../../lib/client/supabase.pub';
 
 export default async function handler(
   req: NextApiRequest,

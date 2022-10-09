@@ -11,13 +11,14 @@ import {
 import { useForm } from '@mantine/form';
 import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { Supabase } from '../lib/client/supabase';
+import { Supabase } from '../lib/client/supabase.pub';
 import { FetchPost } from '../lib/helpers/FetchHelpers';
 import CallNoti from '../lib/helpers/NotiCaller';
 import Password from '../lib/helpers/PasswordFuns';
 import ModalHeader from '../components/header/ModalHeader';
+import { MinPassLength } from '../lib/consts';
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const { user } = await Supabase.auth.api.getUserByCookie(req);
@@ -38,12 +39,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
 const SignUp: NextPage = () => {
   const [PrivateLoading, setPrivateLoading] = useState(false);
-  const Router = useRouter();
 
-  useEffect(() => {
-    sessionStorage.clear();
-    console.info('Session storage cleared!');
-  }, []);
+  const Router = useRouter();
 
   const HandleSignUp = async (EMAIL: string, PASSWORD: string) => {
     try {
@@ -90,8 +87,8 @@ const SignUp: NextPage = () => {
           ? null
           : 'Invalid email',
       Password: (value) =>
-        value.length < 6
-          ? '"password" length must be at least 6 characters long'
+        value.length < MinPassLength
+          ? `"Password" length must be at least ${MinPassLength} characters long`
           : null,
       ConfirmPassword: (value, values) =>
         value !== values.Password ? 'Passwords did not match' : null,

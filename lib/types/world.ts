@@ -35,3 +35,26 @@ export interface BoolCardDataTypes {
   com: ReactNode;
   maxW: number;
 }
+
+export interface ChangePassTypes {
+  oldPass: string;
+  newPass: string;
+  confirmNewPass: string;
+}
+
+export type DashboardStateType =
+  | 'loading'
+  | 'error'
+  | 'list'
+  | 'updater'
+  | 'settings';
+
+export type DashboardModalType = 'addConfig' | null;
+
+export type DashboardDataType<T> = T | null;
+
+export interface DashboardStateTypes<T> {
+  state: DashboardStateType;
+  modal: DashboardModalType;
+  data: DashboardDataType<T>;
+}

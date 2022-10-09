@@ -1,7 +1,8 @@
 import { GetServerSideProps, NextPage } from 'next';
 import React from 'react';
 import DashCom from '../components/dashboard/main';
-import { Supabase } from '../lib/client/supabase';
+import { Supabase } from '../lib/client/supabase.pub';
+import { DashboardProvider } from '../lib/context/Dashboard';
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const { user } = await Supabase.auth.api.getUserByCookie(req);
@@ -21,9 +22,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 };
 
 const Dashboard: NextPage = () => (
-  <div style={{ position: 'relative' }}>
-    <DashCom />
-  </div>
+  <>
+    <DashboardProvider>
+      <DashCom />
+    </DashboardProvider>
+  </>
 );
 
 export default Dashboard;

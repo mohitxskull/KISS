@@ -3,7 +3,14 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FetchPost } from '../helpers/FetchHelpers';
 import CallNoti from '../helpers/NotiCaller';
 import { DashboardContextTypes } from '../types/context';
-import { APIResTypes, ConfigTypes } from '../types/world';
+import {
+  APIResTypes,
+  ConfigTypes,
+  DashboardDataType,
+  DashboardModalType,
+  DashboardStateType,
+  DashboardStateTypes,
+} from '../types/world';
 import { createGenericContext } from './CreateContext';
 
 const [useDashboardContext, DashboardContextProvider] =
@@ -12,28 +19,42 @@ const [useDashboardContext, DashboardContextProvider] =
 const DashboardProvider = ({ children }: { children: React.ReactNode }) => {
   const [ConfigList, ConfigListHandler] = useListState<ConfigTypes>([]);
 
-  const [PriLoading, setPriLoading] = useState(true);
-  const [AddConfigModalState, setAddConfigModalState] = useState(false);
+  const [DashboardState, setDashboardState] = useState<
+    DashboardStateTypes<any>
+  >({
+    state: 'loading',
+    modal: null,
+    data: null,
+  });
 
-  const [FetchError, setFetchError] = useState<string | null>(null);
-  const [ConfigToUpdate, setConfigToUpdate] = useState<ConfigTypes | null>(
-    null
-  );
+  const GetDashboardState = <T,>(): DashboardStateTypes<T> => DashboardState;
+
+  const SetDashboardState = <T,>({
+    modal = DashboardState.modal,
+    state = DashboardState.state,
+    data = DashboardState.data,
+  }: {
+    modal?: DashboardModalType;
+    state?: DashboardStateType;
+    data?: DashboardDataType<T>;
+  }) => {
+    setDashboardState({ modal, state, data });
+  };
 
   const Origin = process.env.NEXT_PUBLIC_PROXY || null;
 
   const UpdateConfigList = async () => {
-    setPriLoading(true);
+    SetDashboardState({ state: 'loading' });
     const Res = await fetch('/api/config/get');
     const ResBody: APIResTypes = await Res.json();
 
     if (Res.ok) {
       ConfigListHandler.setState(ResBody.Data);
     } else {
-      setFetchError(ResBody.Error);
+      SetDashboardState({ state: 'error', data: ResBody.Error });
     }
 
-    setPriLoading(false);
+    SetDashboardState({ state: 'list' });
   };
 
   const HandleUpdateConfig = async (
@@ -51,7 +72,7 @@ const DashboardProvider = ({ children }: { children: React.ReactNode }) => {
         () => ({ ...ResBody.Data })
       );
       CallNoti('Done', 'Config updated');
-      setConfigToUpdate(null);
+      SetDashboardState({ state: 'list', data: null });
     } else {
       CallNoti('Error', ResBody.Error);
     }
@@ -88,7 +109,7 @@ const DashboardProvider = ({ children }: { children: React.ReactNode }) => {
 
       ConfigListHandler.remove(ConfigIndex);
       CallNoti('Done', 'Config deleted');
-      setConfigToUpdate(null);
+      SetDashboardState({ state: 'list', data: null });
     } else {
       CallNoti('Error', ResBody.Error);
     }
@@ -104,18 +125,13 @@ const DashboardProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         ConfigList,
         ConfigListHandler,
-        PriLoading,
-        setPriLoading,
-        AddConfigModalState,
-        setAddConfigModalState,
         HandleAddConfig,
-        FetchError,
         UpdateConfigList,
         Origin,
-        ConfigToUpdate,
-        setConfigToUpdate,
         HandleUpdateConfig,
         HandleDeleteConfig,
+        GetDashboardState,
+        SetDashboardState,
       }}
     >
       {children}

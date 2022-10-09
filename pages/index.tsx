@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, SimpleGrid, Text } from '@mantine/core';
 import { NextPage } from 'next';
-import Link from 'next/link';
+import { NextLink } from '@mantine/next';
 import { DashFooter } from '../components/footer/DashFooter';
 
 const Index: NextPage = () => (
@@ -33,17 +33,17 @@ const Index: NextPage = () => (
               Kiss
             </Text>
 
-            <Link href="/signin">
-              <Text
-                align="center"
-                sx={() => ({
-                  cursor: 'pointer',
-                  textDecoration: 'underline',
-                })}
-              >
-                Signin
-              </Text>
-            </Link>
+            <Text
+              component={NextLink}
+              href="/signin"
+              align="center"
+              sx={() => ({
+                cursor: 'pointer',
+                textDecoration: 'underline',
+              })}
+            >
+              Signin
+            </Text>
           </SimpleGrid>
         </div>
       </div>

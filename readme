@@ -1,0 +1,3 @@
+# Security flaw
+password hash are stored in supabase user object.
+change it and store it in secure mongodb or somewhere else!

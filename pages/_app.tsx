@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 import { FingerprintProvider } from '../lib/context/Fingerprint';
 import '../styles/world.css';
 import '../styles/underline.css';
-import { Supabase } from '../lib/client/supabase';
+import { Supabase } from '../lib/client/supabase.pub';
 import { FetchPost } from '../lib/helpers/FetchHelpers';
 
 export default function App(props: AppProps) {
@@ -32,11 +32,12 @@ export default function App(props: AppProps) {
       console.log(`Auth Change --- ${event} --- ${session?.user?.email}`);
 
       if (event === 'SIGNED_OUT' && session === null) {
-        FetchPost('/api/auth', { event, session });
-        Router.push('/signin');
+        FetchPost('/api/auth', { event, session }).then(() => Router.push('/'));
       }
       if (event === 'SIGNED_IN' && session !== null) {
-        FetchPost('/api/auth', { event, session });
+        FetchPost('/api/auth', { event, session }).then(() =>
+          Router.push('/dashboard')
+        );
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

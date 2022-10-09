@@ -1,4 +1,4 @@
-import { Supabase } from '../client/supabase';
+import { Supabase } from '../client/supabase.pub';
 import CallNoti from './NotiCaller';
 
 const SupabaseLogout = async () => {

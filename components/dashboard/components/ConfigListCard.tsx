@@ -15,7 +15,7 @@ import CalcAgo from '../../../lib/helpers/CalcAgo';
 import { ConfigTypes } from '../../../lib/types/world';
 
 const ConfigListCard = ({ CONFIG }: { CONFIG: ConfigTypes }) => {
-  const { Origin, setConfigToUpdate } = useDashboardContext();
+  const { Origin, SetDashboardState } = useDashboardContext();
   // const MakeLinkSmallTrigger = useMediaQuery('(max-width: 422px)', true, {
   //   getInitialValueInEffect: false,
   // });
@@ -23,7 +23,9 @@ const ConfigListCard = ({ CONFIG }: { CONFIG: ConfigTypes }) => {
   return (
     <>
       <Card
-        onDoubleClick={() => setConfigToUpdate(CONFIG)}
+        onDoubleClick={() =>
+          SetDashboardState({ state: 'updater', data: CONFIG })
+        }
         mb="sm"
         sx={(theme) => ({
           cursor: 'pointer',
