@@ -58,14 +58,15 @@ const PassSettings = () => {
           <PasswordInput
             // description="If you don't remember your old password click on forgot password an reset link on your email."
             placeholder="Current password"
+            disabled={PriLoading}
             required
             withAsterisk={false}
             {...UpdatePassForm.getInputProps('oldPass')}
           />
 
           <PasswordInput
-            withAsterisk={false}
             disabled={PriLoading}
+            withAsterisk={false}
             placeholder="New password"
             styles={() => ({
               input: { userSelect: 'auto' },
@@ -86,6 +87,7 @@ const PassSettings = () => {
           />
 
           <PasswordInput
+            disabled={PriLoading}
             placeholder="Confirm new password"
             required
             withAsterisk={false}
@@ -93,7 +95,7 @@ const PassSettings = () => {
           />
         </SimpleGrid>
 
-        <Button type="submit" fullWidth mt="md">
+        <Button loading={PriLoading} type="submit" fullWidth mt="md">
           Update
         </Button>
       </form>
