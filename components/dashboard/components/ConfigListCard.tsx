@@ -10,12 +10,13 @@ import {
 // import { useMediaQuery } from '@mantine/hooks';
 import React from 'react';
 import { ExternalLink } from 'tabler-icons-react';
+import { ProxyUrl } from '../../../lib/consts';
 import { useDashboardContext } from '../../../lib/context/Dashboard';
 import CalcAgo from '../../../lib/helpers/CalcAgo';
 import { ConfigTypes } from '../../../lib/types/world';
 
 const ConfigListCard = ({ CONFIG }: { CONFIG: ConfigTypes }) => {
-  const { Origin, SetDashboardState } = useDashboardContext();
+  const { SetDashboardState } = useDashboardContext();
   // const MakeLinkSmallTrigger = useMediaQuery('(max-width: 422px)', true, {
   //   getInitialValueInEffect: false,
   // });
@@ -101,7 +102,7 @@ const ConfigListCard = ({ CONFIG }: { CONFIG: ConfigTypes }) => {
 
               <Group>
                 <Anchor
-                  href={`${Origin}/${CONFIG._id}`}
+                  href={`${ProxyUrl}/k/${CONFIG._id}`}
                   lineClamp={1}
                   target="_blank"
                   size="xs"

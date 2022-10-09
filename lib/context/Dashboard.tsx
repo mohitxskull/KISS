@@ -41,8 +41,6 @@ const DashboardProvider = ({ children }: { children: React.ReactNode }) => {
     setDashboardState({ modal, state, data });
   };
 
-  const Origin = process.env.NEXT_PUBLIC_PROXY || null;
-
   const UpdateConfigList = async () => {
     SetDashboardState({ state: 'loading' });
     const Res = await fetch('/api/config/get');
@@ -127,7 +125,6 @@ const DashboardProvider = ({ children }: { children: React.ReactNode }) => {
         ConfigListHandler,
         HandleAddConfig,
         UpdateConfigList,
-        Origin,
         HandleUpdateConfig,
         HandleDeleteConfig,
         GetDashboardState,

@@ -11,6 +11,7 @@ import {
 import { useForm } from '@mantine/form';
 import { openConfirmModal } from '@mantine/modals';
 import React, { useEffect, useState } from 'react';
+import { ProxyUrl } from '../../../../lib/consts';
 import { useDashboardContext } from '../../../../lib/context/Dashboard';
 import { BoolCardDataTypes, ConfigTypes } from '../../../../lib/types/world';
 import ModalHeader from '../../../header/ModalHeader';
@@ -22,7 +23,6 @@ const Updater = () => {
     SetDashboardState,
     HandleUpdateConfig,
     HandleDeleteConfig,
-    Origin,
   } = useDashboardContext();
 
   const DashboardState = GetDashboardState<ConfigTypes>();
@@ -195,7 +195,7 @@ const Updater = () => {
             {...UpdateForm.getInputProps('name')}
           />
           <TextInput
-            description={`${Origin}/${UpdateForm.values._id}`}
+            description={`${ProxyUrl}/k/${UpdateForm.values._id}`}
             label="Proxy id"
             value={UpdateForm.values._id}
             readOnly

@@ -26,7 +26,6 @@ export interface DashboardContextTypes {
   HandleUpdateConfig: HandleUpdateConfig;
   HandleDeleteConfig: HandleDeleteConfig;
   UpdateConfigList: () => Promise<void>;
-  Origin: string | null;
   GetDashboardState: <T>() => DashboardStateTypes<T>;
   SetDashboardState: <T>({
     modal,
