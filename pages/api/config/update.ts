@@ -49,12 +49,13 @@ export default async function handler(
             { $set: NewConfig }
           );
 
-          const UpdateToCache = await FetchPost(
+          FetchPost(
             `${ProxyUrl}/cache/update/config/update/${process.env.PROXY_PASS}/`,
             NewConfig
+          ).then((updateres) =>
+            console.log('Cache update res => ', updateres.status)
           );
 
-          console.log('Cache update res => ', UpdateToCache.status);
           res.status(200).json({ Data: NewConfig, Error: null });
         } else {
           res.status(404).json({ Data: null, Error: 'Config not in database' });
