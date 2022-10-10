@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
-import { ColorSchemeProvider, MantineProvider } from '@mantine/core';
+import { Center, ColorSchemeProvider, MantineProvider } from '@mantine/core';
 import { AppProps } from 'next/app';
-import { useLocalStorage } from '@mantine/hooks';
+import { useLocalStorage, useNetwork } from '@mantine/hooks';
 import { NotificationsProvider } from '@mantine/notifications';
 import { ModalsProvider } from '@mantine/modals';
 import { useRouter } from 'next/router';
@@ -11,11 +11,13 @@ import '../styles/world.css';
 import '../styles/underline.css';
 import { Supabase } from '../lib/client/supabase.pub';
 import { FetchPost } from '../lib/helpers/FetchHelpers';
+import OfflineCom from '../components/Offline';
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
 
   const Router = useRouter();
+  const NetworkStatus = useNetwork();
 
   const [colorScheme, setColorScheme] = useLocalStorage<'dark' | 'light'>({
     key: 'colourScheme',
@@ -58,28 +60,34 @@ export default function App(props: AppProps) {
         />
       </Head>
 
-      <FingerprintProvider>
-        <ColorSchemeProvider
-          colorScheme={colorScheme}
-          toggleColorScheme={toggleColorScheme}
-        >
-          <MantineProvider
-            withGlobalStyles
-            withNormalizeCSS
-            theme={{
-              colorScheme,
-              primaryColor: 'grape',
-              primaryShade: 6,
-            }}
+      {NetworkStatus.online ? (
+        <FingerprintProvider>
+          <ColorSchemeProvider
+            colorScheme={colorScheme}
+            toggleColorScheme={toggleColorScheme}
           >
-            <ModalsProvider>
-              <NotificationsProvider>
-                <Component {...pageProps} />
-              </NotificationsProvider>
-            </ModalsProvider>
-          </MantineProvider>
-        </ColorSchemeProvider>
-      </FingerprintProvider>
+            <MantineProvider
+              withGlobalStyles
+              withNormalizeCSS
+              theme={{
+                colorScheme,
+                primaryColor: 'grape',
+                primaryShade: 6,
+              }}
+            >
+              <ModalsProvider>
+                <NotificationsProvider>
+                  <Component {...pageProps} />
+                </NotificationsProvider>
+              </ModalsProvider>
+            </MantineProvider>
+          </ColorSchemeProvider>
+        </FingerprintProvider>
+      ) : (
+        <Center style={{ height: '100vh' }}>
+          <OfflineCom />
+        </Center>
+      )}
     </>
   );
 }
