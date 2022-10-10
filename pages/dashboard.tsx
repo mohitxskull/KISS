@@ -1,11 +1,14 @@
 import { GetServerSideProps, NextPage } from 'next';
-import React, { lazy } from 'react';
+import dynamic from 'next/dynamic';
+import React from 'react';
 import SuspenseLoad from '../components/dynamic';
 import { LoadingScreen } from '../components/Loading';
 import { Supabase } from '../lib/client/supabase.pub';
 import { DashboardProvider } from '../lib/context/Dashboard';
 
-const DynamicDashComponent = lazy(() => import('../components/dashboard/main'));
+const DynamicDashComponent = dynamic(import('../components/dashboard/main'), {
+  suspense: true,
+});
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const { user } = await Supabase.auth.api.getUserByCookie(req);

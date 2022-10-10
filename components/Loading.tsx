@@ -1,9 +1,9 @@
 import { Center, Loader, Text } from '@mantine/core';
 import React from 'react';
 
-export const LoadingScreen = () => (
+export const LoadingScreen = ({ h = '100vh' }: { h?: string }) => (
   <>
-    <Center style={{ height: '100vh' }}>
+    <Center style={{ height: h }}>
       <Loader variant="dots" />
     </Center>
   </>

@@ -1,6 +1,7 @@
 import { Alert, Code, Container, Group, Text } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
-import React, { lazy } from 'react';
+import dynamic from 'next/dynamic';
+import React from 'react';
 import { InfoCircle } from 'tabler-icons-react';
 import { useDashboardContext } from '../../lib/context/Dashboard';
 import { SettingProvider } from '../../lib/context/Settings';
@@ -9,11 +10,15 @@ import SuspenseLoad from '../dynamic';
 import { NoProxyConfigs } from '../EmptyMsgCom';
 import { DashFooter } from '../footer/DashFooter';
 import DashHeader from '../header/DashHeader';
-import { LoadingText } from '../Loading';
+import { LoadingScreen, LoadingText } from '../Loading';
 import ConfigListCard from './components/ConfigListCard';
 
-const DynamicSettingsCard = lazy(() => import('../setting/Card'));
-const DynamicUpdater = lazy(() => import('./components/Updater/Updater'));
+const DynamicSettingsCard = dynamic(import('../setting/Card'), {
+  suspense: true,
+});
+const DynamicUpdater = dynamic(import('./components/Updater/Updater'), {
+  suspense: true,
+});
 
 const DashboardComponent = () => {
   const [TutorialState, setTutorialState] = useLocalStorage<boolean>({
@@ -47,7 +52,7 @@ const DashboardComponent = () => {
 
           <Container mb="xl">
             {DashboardState.state === 'settings' && (
-              <SuspenseLoad>
+              <SuspenseLoad loading={<LoadingScreen h="60vh" />}>
                 <SettingProvider>
                   <DynamicSettingsCard />
                 </SettingProvider>
@@ -55,7 +60,7 @@ const DashboardComponent = () => {
             )}
 
             {DashboardState.state === 'updater' && (
-              <SuspenseLoad>
+              <SuspenseLoad loading={<LoadingScreen h="60vh" />}>
                 <DynamicUpdater />
               </SuspenseLoad>
             )}
