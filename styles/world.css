@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'DGE-B';
-  src: url(/DharmaGothicE_ExBold_I.otf);
+  src: url(/Dharma.woff2);
 }
 
 @font-face {
   font-family: 'Archiv-o';
-  src: url(/Archivo.ttf);
+  src: url(/Archivo.woff2);
 }
 
 html,

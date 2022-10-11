@@ -10,7 +10,7 @@ import SuspenseLoad from '../dynamic';
 import { NoProxyConfigs } from '../EmptyMsgCom';
 import { DashFooter } from '../footer/DashFooter';
 import DashHeader from '../header/DashHeader';
-import { LoadingScreen, LoadingText } from '../Loading';
+import { LoadingScreen } from '../Loading';
 import ConfigListCard from './components/ConfigListCard';
 
 const DynamicSettingsCard = dynamic(import('../setting/Card'), {
@@ -38,7 +38,9 @@ const DashboardComponent = () => {
           <DashHeader />
         </div>
         <div className="row content">
-          {DashboardState.state === 'loading' && <LoadingText mt={100} />}
+          {DashboardState.state === 'loading' && (
+            <NoProxyConfigs mt={100} msg="Loading" ani />
+          )}
 
           {DashboardState.state === 'error' && (
             <AlertCom

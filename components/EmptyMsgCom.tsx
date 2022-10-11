@@ -1,17 +1,25 @@
 import { Center, SimpleGrid, Skeleton, Text } from '@mantine/core';
 import React from 'react';
 
-export const NoProxyConfigs = ({ mt, msg }: { mt: number; msg: string }) => (
+export const NoProxyConfigs = ({
+  mt,
+  msg,
+  ani = false,
+}: {
+  mt: number;
+  msg: string;
+  ani?: boolean;
+}) => (
   <>
     <SimpleGrid spacing="xs" mt={mt}>
       <Center>
-        <Skeleton animate={false} height={25} width="20%" radius="sm" />
+        <Skeleton animate={ani} height={25} width="20%" radius="sm" />
       </Center>
       <Center>
-        <Skeleton animate={false} height={25} width="20%" radius="sm" />
+        <Skeleton animate={ani} height={25} width="20%" radius="sm" />
       </Center>
       <Center>
-        <Skeleton animate={false} height={25} width="20%" radius="sm" />
+        <Skeleton animate={ani} height={25} width="20%" radius="sm" />
       </Center>
       <Center>
         <Text

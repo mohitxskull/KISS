@@ -1,28 +1,25 @@
 import React from 'react';
-import { Box, SimpleGrid, Text } from '@mantine/core';
+import { Box, Center, Code, Divider, SimpleGrid, Text } from '@mantine/core';
 import { NextPage } from 'next';
-import { NextLink } from '@mantine/next';
+import { ArrowBottomBar } from 'tabler-icons-react';
 import { DashFooter } from '../components/footer/DashFooter';
+import Underline from '../components/Underline';
+import { HomeHeader } from '../components/header/HomeHeader';
 
 const Index: NextPage = () => (
   <>
-    <Box
-      sx={() => ({
-        height: '90vh',
-      })}
-      pt={70}
-    >
-      <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-        <div
-          style={{
-            position: 'absolute',
-            left: '50%',
-            top: '50%',
-            transform: 'translate(-50%, -50%)',
-          }}
-        >
-          <SimpleGrid cols={1}>
+    <div className="layout">
+      <div className="row header">
+        <HomeHeader />
+      </div>
+      <div className="row content">
+        <Center mb={100}>
+          <SimpleGrid
+            cols={1}
+            style={{ maxWidth: '250px', userSelect: 'none' }}
+          >
             <Text
+              align="center"
               sx={(theme) => ({
                 fontFamily: 'DGE-B, sans-serif',
                 fontSize: 145, // SmallerScreen ? 100 : 200,
@@ -33,23 +30,51 @@ const Index: NextPage = () => (
               Kiss
             </Text>
 
-            <Text
-              component={NextLink}
-              href="/signin"
-              align="center"
-              sx={() => ({
-                cursor: 'pointer',
-                textDecoration: 'underline',
-              })}
-            >
-              Signin
+            <Text m="auto" size="sm" color="dimmed">
+              On
+              <Underline>Kiss</Underline>
+              you can shorten your long url&apos;s.
             </Text>
-          </SimpleGrid>
-        </div>
-      </div>
-    </Box>
 
-    <DashFooter />
+            <SimpleGrid spacing={5}>
+              <Code
+                m="auto"
+                style={{ maxWidth: '250px', wordBreak: 'break-all' }}
+              >
+                https://www.reuters.com/article/urnidgns002570f3005978d8002576f60035a6bb-idUS98192761820100330
+              </Code>
+
+              <Box m="auto" mt="xs">
+                <ArrowBottomBar size={18} />
+              </Box>
+
+              <Code m="auto">https://k.cyclic.app/k/XJOIFBAYDC</Code>
+            </SimpleGrid>
+
+            <Divider my="md" />
+
+            <Text m="auto" size="sm" color="dimmed">
+              And you can also use
+              <Underline>Kiss</Underline>
+              as a reverse proxy.
+            </Text>
+
+            <SimpleGrid spacing={5}>
+              <Code m="auto">https://mohitxskull.vercel.app/</Code>
+
+              <Box m="auto" mt="xs">
+                <ArrowBottomBar size={18} />
+              </Box>
+
+              <Code m="auto">https://k.cyclic.app/k/2NIIKVJ5Z3</Code>
+            </SimpleGrid>
+          </SimpleGrid>
+        </Center>
+      </div>
+      <div className="row footer">
+        <DashFooter />
+      </div>
+    </div>
   </>
 );
 export default Index;
