@@ -39,15 +39,10 @@ export function HomeHeader() {
           </Group>
 
           <Group position="center" grow>
-            <Button
-              component={NextLink}
-              prefetch
-              href="/signin"
-              variant="subtle"
-            >
+            <Button component={NextLink} href="/signin" variant="subtle">
               Log in
             </Button>
-            <Button component={NextLink} prefetch href="/signup">
+            <Button component={NextLink} href="/signup">
               Sign up
             </Button>
           </Group>
