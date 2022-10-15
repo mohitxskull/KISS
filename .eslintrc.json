@@ -1,0 +1,11 @@
+{
+  "extends": ["next/core-web-vitals", "mantine"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "no-console": "off",
+    "no-throw-literal": "off",
+    "@typescript-eslint/no-throw-literal": "off"
+  }
+}

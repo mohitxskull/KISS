@@ -1,0 +1,10 @@
+# Security flaw
+
+password hash are stored in supabase user object.
+change it and store it in secure mongodb or somewhere else!
+
+error boundry
+
+
+https://k.cyclic.app/k/10SLBLH87S -> redirect -> https://www.reuters.com/article/urnidgns002570f3005978d8002576f60035a6bb-idUS98192761820100330
+https://k.cyclic.app/k/2NIIKVJ5Z3 -> proxy -> https://mohitxskull.vercel.app/

@@ -1,0 +1,55 @@
+@font-face {
+  font-family: 'DGE-B';
+  src: url(/Dharma.woff2);
+}
+
+@font-face {
+  font-family: 'Archiv-o';
+  src: url(/Archivo.woff2);
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.layout {
+  display: flex;
+  flex-flow: column;
+  height: 100vh;
+}
+
+.layout .header {
+  flex: 0 1 auto;
+}
+
+.layout .content {
+  flex: 1 1 auto;
+}
+
+.layout .footer {
+  flex: 0 1 40px;
+}
+
+.Elloading:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(4, end) 2000ms infinite;
+  animation: ellipsis steps(4, end) 2000ms infinite;
+  content: '\2026'; /* ascii code for the ellipsis character */
+  width: 0px;
+}
+
+@keyframes ellipsis {
+  to {
+    width: 1.25em;
+  }
+}
+
+@-webkit-keyframes ellipsis {
+  to {
+    width: 1.25em;
+  }
+}
