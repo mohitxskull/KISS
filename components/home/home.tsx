@@ -40,7 +40,6 @@ const HomeComponent = () => (
                 m="auto"
                 style={{ maxWidth: '250px', wordBreak: 'break-all' }}
               >
-<<<<<<< HEAD
                 <a
                   style={{ color: 'inherit', textDecoration: 'none' }}
                   target="_blank"
@@ -49,16 +48,12 @@ const HomeComponent = () => (
                 >
                   https://www.reuters.com/article/urnidgns002570f3005978d8002576f60035a6bb-idUS98192761820100330
                 </a>
-=======
-                https://www.reuters.com/article/urnidgns002570f3005978d8002576f60035a6bb-idUS98192761820100330
->>>>>>> cd11ec9e9766aba5c89399e50f074d728e54cea6
               </Code>
 
               <Box m="auto" mt="xs">
                 <ArrowBottomBar size={18} />
               </Box>
 
-<<<<<<< HEAD
               <Code m="auto">
                 <a
                   style={{ color: 'inherit' }}
@@ -69,9 +64,6 @@ const HomeComponent = () => (
                   https://k.cyclic.app/k/XJOIFBAYDC
                 </a>
               </Code>
-=======
-              <Code m="auto">https://k.cyclic.app/k/XJOIFBAYDC</Code>
->>>>>>> cd11ec9e9766aba5c89399e50f074d728e54cea6
             </SimpleGrid>
 
             <Divider my="md" />
@@ -83,7 +75,6 @@ const HomeComponent = () => (
             </Text>
 
             <SimpleGrid spacing={5}>
-<<<<<<< HEAD
               <Code m="auto">
                 <a
                   style={{ color: 'inherit', textDecoration: 'none' }}
@@ -94,15 +85,11 @@ const HomeComponent = () => (
                   https://mohitxskull.vercel.app/
                 </a>
               </Code>
-=======
-              <Code m="auto">https://mohitxskull.vercel.app/</Code>
->>>>>>> cd11ec9e9766aba5c89399e50f074d728e54cea6
 
               <Box m="auto" mt="xs">
                 <ArrowBottomBar size={18} />
               </Box>
 
-<<<<<<< HEAD
               <Code m="auto">
                 <a
                   style={{ color: 'inherit' }}
@@ -113,9 +100,6 @@ const HomeComponent = () => (
                   https://k.cyclic.app/k/2NIIKVJ5Z3
                 </a>
               </Code>
-=======
-              <Code m="auto">https://k.cyclic.app/k/2NIIKVJ5Z3</Code>
->>>>>>> cd11ec9e9766aba5c89399e50f074d728e54cea6
             </SimpleGrid>
           </SimpleGrid>
         </Center>
