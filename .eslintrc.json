@@ -1,0 +1,6 @@
+{
+  "extends": ["next/core-web-vitals", "mantine"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  }
+}
